@@ -85,19 +85,6 @@ jobs:
           # Store REQ_ID into outputs for later on usage
           echo "::set-output name=REQ_ID::$(jq -r .id response.json)"
 
-#      - name: Add comment with Testing Farm request/result
-#        # This step adds a new comment to the pull request with a link to the test.
-#        # TODO: This is a temporary workaround until a proper way to set a commit status is implemented.
-#        id: comment
-#        uses: peter-evans/create-or-update-comment@v1
-#        if: always()
-#        with:
-#          issue-number: ${{ steps.pr_nr.outputs.PR_NR }}
-#          body: |
-#            Testing Farm - CentOS 7 [request](${{ secrets.TF_ENDPOINT }}/requests/${{ steps.sched_test.outputs.req_id }})
-#            for CentOS 7 test was created. Once finished, results should be available [here](http://artifacts.dev.testing-farm.io/${{ steps.sched_test.outputs.req_id }}/)
-#            [Full pipeline log](http://artifacts.dev.testing-farm.io/${{ steps.sched_test.outputs.req_id }}/pipeline.log)
-
   running:
     needs: build
     name: Check running tests on Testing Farm service

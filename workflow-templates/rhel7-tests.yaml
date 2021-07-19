@@ -31,9 +31,10 @@ jobs:
       - name: Get sha
         id: sha
         run: |
+          # Store SHA into outputs
           echo "::set-output name=SHA::$(git rev-parse HEAD)"
 
-      - name: Create status check to pending
+      - name: Create status check to pending for RHEL7
         id: pending
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -55,9 +56,10 @@ jobs:
             --data @pending.json
           echo "::set-output name=GITHUB_REPOSITORY::$GITHUB_REPOSITORY"
 
-      - name: Schedule a test on Testing Farm
+      - name: Schedule a test on Testing Farm for RHEL7
         id: sched_test
         run: |
+          # Update ubuntu-20.04 in order to install curl and jq
           apt update && apt -y install curl jq
           cat << EOF > request.json
           {
@@ -81,24 +83,12 @@ jobs:
           }
           EOF
           curl ${{ secrets.TF_ENDPOINT }}/requests --data @request.json --header "Content-Type: application/json" --output response.json
+          # Store REQ_ID into outputs for later on usage
           echo "::set-output name=REQ_ID::$(jq -r .id response.json)"
-
-#      - name: Add comment with Testing Farm request/result
-#        # This step adds a new comment to the pull request with a link to the test.
-#        # TODO: This is a temporary workaround until a proper way to set a commit status is implemented.
-#        id: comment
-#        uses: peter-evans/create-or-update-comment@v1
-#        if: always()
-#        with:
-#          issue-number: ${{ steps.pr_nr.outputs.PR_NR }}
-#          body: |
-#            Testing Farm - RHEL7 [request](${{ secrets.TF_ENDPOINT }}/requests/${{ steps.sched_test.outputs.req_id }})
-#            for RHEL7 test was created. Once finished, results should be available [here](http://artifacts.dev.testing-farm.io/${{ steps.sched_test.outputs.req_id }}/)
-#            [Full pipeline log](http://artifacts.dev.testing-farm.io/${{ steps.sched_test.outputs.req_id }}/pipeline.log)
 
   running:
     needs: build
-    name: Check running tests on Testing Farm service
+    name: Check running tests on Testing Farm service for RHEL7
     runs-on: ubuntu-20.04
     outputs:
       REQ_ID: ${{steps.req_sha.outputs.REQ_ID}}
@@ -108,13 +98,17 @@ jobs:
       - name: Check if REQ_ID and SHA exists
         id: req_sha
         run: |
+          # Update ubuntu-20.04 in order to install curl and jq
+          # each job is separate machine
           apt update && apt -y install curl jq
+          # Propagate REQ_ID and SHA into the finish section
           echo "::set-output name=REQ_ID::${{needs.build.outputs.REQ_ID}}"
           echo "::set-output name=SHA::${{needs.build.outputs.SHA}}"
 
-      - name: Switch to running state of Testing Farm request
+      - name: Switch to running state of Testing Farm request for RHEL7
         id: running
         run: |
+          # Create running.json file for query, whether job is finished or not.
           cat << EOF > running.json
           {
             "sha": "${{needs.build.outputs.SHA}}",
@@ -124,6 +118,7 @@ jobs:
             "target_url": "http://artifacts.dev.testing-farm.io/${{ needs.build.outputs.REQ_ID }}/"
           }
           EOF
+          # Update GitHub status description to 'Build started'
           curl -X POST -H "Authorization: Bearer ${{secrets.GITHUB_TOKEN}}" -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/$GITHUB_REPOSITORY/statuses/${{needs.build.outputs.SHA}} \
             --data @running.json
@@ -134,7 +129,9 @@ jobs:
           CMD=${{ secrets.TF_ENDPOINT }}/requests/${{needs.build.outputs.REQ_ID}}
           curl $CMD > job.json
           state=$(jq -r .state job.json)
+          # Wait till job is not finished. As soon as state is complete or failure then go to the finish action
           while [ "$state" == "running" ] || [ "$state" == "new" ] || [ "$state" == "pending" ] || [ "$state" == "queued" ]; do
+            # Wait 30s. We do not need to query Testing Farm each second
             sleep 30
             curl $CMD > job.json
             state=$(jq -r .state job.json)
@@ -142,7 +139,7 @@ jobs:
 
   finish:
     needs: running
-    name: Tests are finished - switching to proper state
+    name: Tests are finished - switching to proper state for RHEL7
     runs-on: ubuntu-20.04
     steps:
       - name: Check if REQ_ID exists
@@ -151,9 +148,11 @@ jobs:
       - name: Check if SHA exists
         run: echo "${{ needs.running.outputs.SHA }}"
 
-      - name: Get final state of Testing Farm request
+      - name: Get final state of Testing Farm request for RHEL7
         id: final_state
         run: |
+          # Update ubuntu-20.04 in order to install curl and jq
+          # each job is separate machine
           apt update && apt -y install curl jq
           curl ${{ secrets.TF_ENDPOINT }}/requests/${{needs.running.outputs.REQ_ID}} > job.json
           cat job.json
@@ -167,6 +166,7 @@ jobs:
               new_state="failure"
             fi
           else
+            # Mark job in case of infrastructure issues. Report to Testing Farm team
             infra_error=" - Infra problems"
             new_state="failure"
           fi
@@ -175,7 +175,7 @@ jobs:
           echo "::set-output name=FINAL_STATE::$new_state"
           echo "::set-output name=INFRA_STATE::$infra_error"
 
-      - name: Switch to final state of Testing Farm request
+      - name: Switch to final state of Testing Farm request for RHEL7
         run: |
           cat << EOF > final.json
           {
@@ -187,6 +187,7 @@ jobs:
           }
           EOF
           cat final.json
+          # Switch Github status to proper state
           curl -X POST -H "Authorization: Bearer ${{secrets.GITHUB_TOKEN}}" -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/$GITHUB_REPOSITORY/statuses/${{needs.running.outputs.SHA}} \
             --data @final.json
