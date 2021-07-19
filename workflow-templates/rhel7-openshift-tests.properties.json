@@ -1,0 +1,5 @@
+{
+  "name": "Sclorg RHEL7-OpenShift3 organization workflow",
+  "description": "Testing RHEL7 images in OpenShift3 environment  on RHEL7 system in Testing Farm",
+  "iconName": "sclorg"
+}
