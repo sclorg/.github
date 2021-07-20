@@ -1,0 +1,5 @@
+{
+  "name": "Sclorg CentOS7-OpenShift3 organization workflow",
+  "description": "Testing CentOS7 images in OpenShift3 environment on CentOS7 system in Testing Farm",
+  "iconName": "sclorg"
+}

@@ -1,0 +1,5 @@
+{
+  "name": "Sclorg RHEL8 organization workflow",
+  "description": "Testing RHEL8 images by docker environment on RHEL8 system in Testing Farm",
+  "iconName": "sclorg"
+}

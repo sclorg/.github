@@ -1,0 +1,5 @@
+{
+  "name": "Sclorg CentOS7 organization workflow",
+  "description": "Testing CentOS7 images by docker environment on CentOS7 system in Testing Farm",
+  "iconName": "sclorg"
+}
