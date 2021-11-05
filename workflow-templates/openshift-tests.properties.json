@@ -1,0 +1,5 @@
+{
+  "name": "OpenShift tests for sclorg organization workflow",
+  "description": "Testing sclorg images in OpenShift 3 and OpenShift 4 environment by Testing Farm",
+  "iconName": "sclorg"
+}
