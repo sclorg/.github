@@ -34,7 +34,7 @@ jobs:
           - tmt_plan: "rhel8-docker"
             os_test: "rhel8"
             context: "RHEL8"
-            compose: "RHEL-8.5.0-Nightly"
+            compose: "RHEL-8-Updated"
             tmt_url: "http://artifacts.osci.redhat.com/testing-farm/"
             tmt_repo: "https://gitlab.cee.redhat.com/platform-eng-core-services/sclorg-tmt-plans"
     if: |
