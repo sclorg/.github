@@ -1,0 +1,5 @@
+{
+  "name": "VCS Diff Lint - Python",
+  "description": "🐍 Differential code linting GitHub action",
+  "categories": ["Python"]
+}
