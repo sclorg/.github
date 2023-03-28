@@ -15,6 +15,7 @@ body:
     attributes:
       label: Container platform
       description: Is your issue related to running containers on OCP or by podman/docker?
+      multiple: true
       options:
         - OCP 3
         - OCP 4
