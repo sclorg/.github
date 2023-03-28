@@ -1,0 +1,5 @@
+{
+  "name": "Differential ShellCheck",
+  "description": "🐚 GitHub action for running ShellCheck differentially",
+  "categories": ["Shell"]
+}
