@@ -28,8 +28,8 @@ body:
 
   - type: dropdown
     attributes:
-      label: Compose
-      description: What Linux distributions are you seeing the problem on?
+      label: OS version of the container image
+      description: What OS versions are affected?
       multiple: true
       options:
         - RHEL 7
