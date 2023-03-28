@@ -1,5 +1,0 @@
-{
-  "name": "Docker tests for sclorg organization workflow",
-  "description": "Testing sclorg images by docker environment on specific system in Testing Farm",
-  "iconName": "sclorg"
-}
