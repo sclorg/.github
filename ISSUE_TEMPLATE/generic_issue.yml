@@ -1,0 +1,55 @@
+name: Generic Container Image Issue
+description: File a generic issue here
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to report this issue to us. We appreciate the feedback and use reports such as this one to guide our efforts at improving our products. That being said, this bug tracking system is not a mechanism for requesting support, and we are not able to guarantee the timeliness or suitability of a resolution.
+
+        If this issue is critical or in any way time sensitive, please raise a ticket through the regular Red Hat support channels to ensure it receives the proper attention and prioritization to assure a timely resolution.
+
+        For information on how to contact the Red Hat production support team, please visit:
+            https://access.redhat.com/support
+
+  - type: dropdown
+    attributes:
+      label: Container platform
+      description: Is your issue related to running containers on OCP or by podman/docker?
+      options:
+        - OCP 3
+        - OCP 4
+        - Podman/Docker
+
+  - type: textarea
+    attributes:
+      label: Version
+      description: What versions are affected?
+
+  - type: dropdown
+    attributes:
+      label: Compose
+      description: What Linux distributions are you seeing the problem on?
+      multiple: true
+      options:
+        - RHEL 7
+        - RHEL 8
+        - RHEL 9
+        - CentOS 7
+        - CentOS Stream 8
+        - CentOS Stream 9
+        - Fedora
+
+  - type: textarea
+    attributes:
+      label: Bugzilla, Jira
+      description: Please enter link to related Bugzilla/Jira, if it exists.
+
+  - type: textarea
+    attributes:
+      label: Description
+      description: Here is a place to entry a description of the issue.
+
+  - type: textarea
+    attributes:
+      label: Reproducer
+      description: Provided reproducer can speed up the time for solving an issue.
