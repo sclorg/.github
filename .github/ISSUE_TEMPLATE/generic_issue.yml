@@ -11,6 +11,9 @@ body:
         For information on how to contact the Red Hat production support team, please visit:
             https://access.redhat.com/support
 
+        For information on how to contribute to this GitHub repository, please visit [Contribution Guidelines](https://github.com/sclorg/welcome/blob/master/contribution.md).
+        For more information about the Software Collection Organization, please visit the [Welcome](https://github.com/sclorg/welcome) pages.
+
   - type: dropdown
     attributes:
       label: Container platform
