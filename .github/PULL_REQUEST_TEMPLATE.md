@@ -8,12 +8,3 @@ For more information about the Software Collection Organization, please visit th
 [2] https://github.com/sclorg/welcome
 
 -->
-
-## Description
-
-<!---
-
-Include here a summary of the change, what issue is fixed by it, and why is this change needed.
-List also the dependencies, if any exist.
-
--->
