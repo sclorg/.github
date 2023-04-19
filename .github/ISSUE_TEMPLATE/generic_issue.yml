@@ -6,7 +6,7 @@ body:
       value: |
         Thank you for taking the time to report this issue to us. We appreciate the feedback and use reports such as this one to guide our efforts at improving our products. That being said, this bug tracking system is not a mechanism for requesting support, and we are not able to guarantee the timeliness or suitability of a resolution.
 
-        If this issue is critical or in any way time sensitive, please raise a ticket through the regular Red Hat support channels to ensure it receives the proper attention and prioritization to assure a timely resolution.
+        If this issue is related to images from official Red Hat registries - registry.access.redhat.com, registry.redhat.io - and is critical or in any way time sensitive, please raise a ticket through the regular Red Hat support channels to ensure it receives the proper attention and prioritization to assure a timely resolution.
 
         For information on how to contact the Red Hat production support team, please visit:
             https://access.redhat.com/support
