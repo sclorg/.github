@@ -56,4 +56,8 @@ body:
   - type: textarea
     attributes:
       label: Reproducer
-      description: Provided reproducer can speed up the time for solving an issue.
+      description: |
+        Providing a reproducer can speed up our issue resolution process. We prefer
+        minimal reproducers, preferably using the podman tool. It is often possible to
+        reproduce the issue locally with podman even though it was discovered in an OCP
+        environment.
